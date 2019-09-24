@@ -13,6 +13,9 @@ import sunbeam.deck
 
 from ecl2df import EclFiles
 
+# Constants to use for pointing to positions in the TABDIMS keyword
+NTPVT_POS = 1
+NTSFUN_POS = 0
 
 def guess_dim(deckstring, dimkeyword, dimitem=0):
     """Guess the correct dimension count for an incoming deck (string)
