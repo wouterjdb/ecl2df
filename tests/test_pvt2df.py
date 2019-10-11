@@ -22,6 +22,31 @@ logger = logging.getLogger("")
 logger.setLevel(logging.DEBUG)
 
 
+def test_densitydeck2df():
+    eclfiles = EclFiles(DATAFILE)
+    density_df = pvt2df.densitydeck2df(eclfiles.get_ecldeck())
+    assert len(density_df) == 1
+    assert 'PVTNUM' in density_df
+    assert 'OILDENSITY' in density_df
+    assert 'WATERDENSITY' in density_df
+    assert 'GASDENSITY' in density_df
+
+    two_pvtnum_deck = """DENSITY
+        860      999.04       1.1427 /
+        800      950     1.05
+        /
+        """
+    density_df = pvt2df.densitydeck2df(EclFiles.str2deck(two_pvtnum_deck))
+    # (a warning will be printed that we cannot guess)
+    assert len(density_df) == 1
+    density_df = pvt2df.densitydeck2df(two_pvtnum_deck)
+    print(density_df)
+    assert 'PVTNUM' in density_df
+    assert density_df['PVTNUM'].max() == 2
+    assert density_df['PVTNUM'].min() == 1
+    assert 'OILDENSITY' in density_df
+
+
 def test_pvt2df():
     """Test that dataframes are produced"""
     eclfiles = EclFiles(DATAFILE)

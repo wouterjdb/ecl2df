@@ -17,6 +17,7 @@ from ecl2df import (
     faults2df,
     equil2df,
     gruptree2df,
+    pvt2df,
     rft2df,
     satfunc2df,
     summary2df,
@@ -55,6 +56,10 @@ def get_parser():
     faults_parser = subparsers.add_parser("faults", help="Extract faults data")
     faults2df.fill_parser(faults_parser)
     faults_parser.set_defaults(func=faults2df.faults2df_main)
+
+    pvt_parser = subparsers.add_parser("pvt", help="Extract PVT data")
+    pvt2df.fill_parser(pvt_parser)
+    pvt_parser.set_defaults(func=pvt2df.pvt2df_main)
 
     rft_parser = subparsers.add_parser(
         "rft",
